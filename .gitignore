@@ -3,3 +3,9 @@
 
 # Ignore Gradle build output directory
 build
+
+# VSCode JSON files
+.vscode/
+
+# Exclude bundled executables
+*.zip
