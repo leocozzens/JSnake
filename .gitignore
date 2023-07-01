@@ -9,3 +9,6 @@ build
 
 # Exclude bundled executables
 *.zip
+
+# Ignore maven output directory
+build/
