@@ -1,10 +1,15 @@
 <project name="JSnake" default="jar" basedir=".">
 
     <target name="default" depends="jar"/>
+    <target name="new" depends="clean,jar"/>
+
+    <property name="project.name" value="JSnake"/>
+    <property name="mainclass.name" value="Main"/>
 
     <property name="src.dir" value="src/main/java"/>
     <property name="build.dir" value="build"/>
-
+    <property name="lib.dir" value="lib"/>
+    <!-- <property name="assets.dir" value="assets"/> -->
 
     <target name="init">
         <mkdir dir="${build.dir}"/>
@@ -12,13 +17,24 @@
     </target>
 
     <target name="compile" depends="init">
-        <javac srcdir="${src.dir}" destdir="${build.dir}/classes" includeantruntime="false" />
+        <javac srcdir="${src.dir}" destdir="${build.dir}/classes" includeantruntime="false">
+            <classpath>
+                <fileset dir="${lib.dir}">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
     </target>
 
     <target name="jar" depends="compile">
-        <jar destfile="${build.dir}/JSnake.jar" basedir="${build.dir}/classes">
+        <jar destfile="${build.dir}/${project.name}.jar" basedir="${build.dir}/classes">
+           <zipgroupfileset dir="${lib.dir}" includes="*.jar"/>
+            <!-- <fileset dir="${assets.dir}">
+                <include name="**/*" />
+            </fileset> -->
             <manifest>
-                <attribute name="Main-Class" value="Game"/>
+                 <attribute name="DependencyFinder" value="main"/>
+                <attribute name="Main-Class" value="${mainclass.name}"/>
             </manifest>
         </jar>
     </target>
