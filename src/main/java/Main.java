@@ -2,8 +2,10 @@
 import game.GameController;
 
 public class Main {
-    private static final String gameTitle = "JSnake";
+    private static final String GAME_TITLE = "JSnake";
     public static void main(String args[]) {
-        new GameController(gameTitle);
+        GameController controller = new GameController(GAME_TITLE);
+        while(controller.isRunning()) controller.playRound();
+        // TODO: Cleanup
     }
 }
