@@ -2,23 +2,24 @@ package game;
 
 // JDK packages
 import java.util.Random;
-import java.util.Timer;
 
 // Local packages
 import game.components.Canvas;
 import game.components.GameWindow;
+import game.components.GameWindow.Direction;
 import game.utils.ScreenManager;
+import javax.swing.Timer;
 
 public class GameController {
-    private static enum Direction { UP, DOWN, LEFT, RIGHT };
+    private static final int DELAY = 75;
 
     private GameWindow gameWindow;
     private Canvas drawCanvas;
     private boolean gameActive;
+    private Direction finalDirection;
     private Timer gameTimer;
     private Random gameRNG;
 
-    private Direction currDirection;
     private int snakeLen;
     private int foodEaten;
     private int foodX;
@@ -31,19 +32,38 @@ public class GameController {
         double[] dimensions = ScreenManager.getScreenDim();
         int canvasSize = (int) (dimensions[0]*.3);
         this.drawCanvas = new Canvas(canvasSize);
-        this.gameWindow = new GameWindow(title, this.drawCanvas);
+        this.finalDirection = Direction.RIGHT;
+        this.gameWindow = new GameWindow(title, this.finalDirection, this.drawCanvas);
         this.gameActive = true;
         this.gameRNG = new Random();
+        this.gameTimer = new Timer(DELAY, this.gameWindow);
 
         this.snakeLen = 6;
         this.foodEaten = 0;
-        this.x = new int[this.drawCanvas.getUnits()];
-        this.y = new int[this.drawCanvas.getUnits()];
+        this.x = new int[this.drawCanvas.getUnitsX()];
+        this.y = new int[this.drawCanvas.getUnitsY()];
     }
 
     // Instance methods
     public void playRound() {
+        this.finalDirection = this.gameWindow.getDirection();
+    }
+    
+
+    private void move() {
         
+    }
+
+    private void newFood() {
+
+    }
+
+    private void checkFood() {
+
+    }
+
+    private void checkCollisons() {
+
     }
 
     // Getters
