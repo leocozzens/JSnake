@@ -36,10 +36,18 @@ public class Canvas extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
-
+        super.paintComponent(g);
+        draw(g);
     }
 
     public void draw(Graphics g) {
+        int yCount = getUnitsX();
+        for(int i = 0; i < yCount; i++) {
+            g.drawLine(i*elementSize, 0, i*elementSize, this.canvasHeight);
+        }
+        for(int i = 0; i < yCount; i++) {
+            g.drawLine(0, i*elementSize, this.canvasWidth, i*elementSize);
+        }
 
     }
 

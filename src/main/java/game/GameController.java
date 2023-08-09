@@ -28,9 +28,8 @@ public class GameController {
     private int[] y;
 
     // Constructor/Destructor
-    public GameController(String title) {
-        double[] dimensions = ScreenManager.getScreenDim();
-        int canvasSize = (int) (dimensions[0]*.3);
+    public GameController(String title, double[] screenDimensions) {
+        int canvasSize = (int) (screenDimensions[0]/3);
         this.drawCanvas = new Canvas(canvasSize);
         this.finalDirection = Direction.RIGHT;
         this.gameWindow = new GameWindow(title, this.finalDirection, this.drawCanvas);
@@ -42,6 +41,8 @@ public class GameController {
         this.foodEaten = 0;
         this.x = new int[this.drawCanvas.getUnitsX()];
         this.y = new int[this.drawCanvas.getUnitsY()];
+        this.newFood();
+        this.gameTimer.start();
     }
 
     // Instance methods
