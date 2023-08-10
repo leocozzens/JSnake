@@ -7,10 +7,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
+// Local packages
+import game.GameController.Direction;
 
 public class GameWindow extends JFrame implements ActionListener {
-    public static enum Direction { UP, DOWN, LEFT, RIGHT };
-
     private Direction currDirection;
 
     public GameWindow(String title, Direction initDirection, Canvas drawCanvas) {

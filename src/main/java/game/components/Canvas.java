@@ -1,16 +1,20 @@
 package game.components;
 
 // JDK packages
-import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 // GUI packages
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
+// Local packages
+import game.GameController.Direction;
 
 public class Canvas extends JPanel {
-    private static final int ELEMENTS_PER = 20;
+    private static final int ELEMENTS_PER = 8;
     private static final Color BG_COLOR = Color.BLACK;
     private static final Color FOOD_COLOR = new Color(200, 50, 50);
 
@@ -18,7 +22,7 @@ public class Canvas extends JPanel {
     private int canvasHeight;
     private int elementSize;
     private int[] foodCoord;
-    private ArrayList<int[]> snakeBody;
+    private Queue<int[]> snakeBody;
 
     public Canvas(int canvasSize) {
         this.canvasWidth = canvasSize;
@@ -28,13 +32,7 @@ public class Canvas extends JPanel {
         this.setBackground(BG_COLOR);
         this.setFocusable(true);
         this.foodCoord = new int[2];
-        this.snakeBody = new ArrayList<int[]>(6);
-        for(int i = 0; i < 6; i++) {
-            int[] newPart = new int[2];
-            newPart[0] = 0;
-            newPart[1] = i;
-            this.snakeBody.add(newPart);
-        }
+        this.snakeBody = new LinkedList<int[]>();
     }
 
     public void paintComponent(Graphics g) {
@@ -53,8 +51,10 @@ public class Canvas extends JPanel {
         g.setColor(FOOD_COLOR);
         g.fillOval(this.foodCoord[0], this.foodCoord[1], elementSize, elementSize);
         g.setColor(Color.GREEN);
-        for(int i = 0; i < this.snakeBody.size(); i++) {
-            g.fillRect(this.snakeBody.get(i)[0]*this.elementSize, this.snakeBody.get(i)[1]*this.elementSize, this.elementSize, this.elementSize);
+        Iterator<int[]> snakeIter = this.snakeBody.iterator();
+        while(snakeIter.hasNext()) {
+            int[] currentPiece = snakeIter.next();
+            g.fillRect(currentPiece[0]*this.elementSize, currentPiece[1]*this.elementSize, this.elementSize, this.elementSize);
         }
     }
 
@@ -62,7 +62,22 @@ public class Canvas extends JPanel {
 
     }
 
-    
+    public void stepSnake(Direction newDirection) {
+        switch(newDirection) {
+            case UP:
+            break;
+            case DOWN:
+            break;
+            case LEFT:
+            break;
+            case RIGHT:
+            break;
+        }
+    }
+
+    public void addPiece(int[] newPiece) {
+        this.snakeBody.add(newPiece);
+    }
 
     public void updateFood(int newX, int newY) {
         this.foodCoord[0] = newX * this.elementSize;
