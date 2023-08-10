@@ -1,5 +1,7 @@
 package game.components;
 
+// JDK packages
+import java.util.ArrayList;
 // GUI packages
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,6 +18,7 @@ public class Canvas extends JPanel {
     private int canvasHeight;
     private int elementSize;
     private int[] foodCoord;
+    private ArrayList<int[]> snakeBody;
 
     public Canvas(int canvasSize) {
         this.canvasWidth = canvasSize;
@@ -25,6 +28,13 @@ public class Canvas extends JPanel {
         this.setBackground(BG_COLOR);
         this.setFocusable(true);
         this.foodCoord = new int[2];
+        this.snakeBody = new ArrayList<int[]>(6);
+        for(int i = 0; i < 6; i++) {
+            int[] newPart = new int[2];
+            newPart[0] = 0;
+            newPart[1] = i;
+            this.snakeBody.add(newPart);
+        }
     }
 
     public void paintComponent(Graphics g) {
@@ -42,6 +52,10 @@ public class Canvas extends JPanel {
         }
         g.setColor(FOOD_COLOR);
         g.fillOval(this.foodCoord[0], this.foodCoord[1], elementSize, elementSize);
+        g.setColor(Color.GREEN);
+        for(int i = 0; i < this.snakeBody.size(); i++) {
+            g.fillRect(this.snakeBody.get(i)[0]*this.elementSize, this.snakeBody.get(i)[1]*this.elementSize, this.elementSize, this.elementSize);
+        }
     }
 
     public void endCanvas(Graphics g) {

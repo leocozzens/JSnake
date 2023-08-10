@@ -12,6 +12,7 @@ import javax.swing.Timer;
 
 public class GameController {
     private static final int DELAY = 75;
+    private static final int START_LEN = 6;
 
     private GameWindow gameWindow;
     private Canvas drawCanvas;
@@ -22,8 +23,6 @@ public class GameController {
 
     private int snakeLen;
     private int foodEaten;
-    private int[] x;
-    private int[] y;
 
     // Constructor/Destructor
     public GameController(String title, double[] screenDimensions) {
@@ -34,9 +33,7 @@ public class GameController {
 
         this.snakeLen = 6;
         this.foodEaten = 0;
-        this.x = new int[this.drawCanvas.getUnitsX()];
-        this.y = new int[this.drawCanvas.getUnitsY()];
-        this.drawCanvas.updateFood(this.gameRNG.nextInt(this.x.length), this.gameRNG.nextInt(this.y.length));
+        this.drawCanvas.updateFood(this.gameRNG.nextInt(this.drawCanvas.getUnitsX()), this.gameRNG.nextInt(this.drawCanvas.getUnitsY()));
         this.gameWindow = new GameWindow(title, this.finalDirection, this.drawCanvas);
         this.gameTimer = new Timer(DELAY, this.gameWindow);
         this.gameActive = true;
@@ -47,11 +44,21 @@ public class GameController {
     public void playRound() {
         this.finalDirection = this.gameWindow.getDirection();
     }
-    
 
-    private void step() {
-        
-    }
+    // private void step() {
+    //     for(int i = snakeLen; i > 0; i--) {
+    //     }
+    //     switch(this.finalDirection) {
+    //         case UP:
+    //         break;
+    //         case DOWN:
+    //         break;
+    //         case LEFT:
+    //         break;
+    //         case RIGHT:
+    //         break;
+    //     }
+    // }
 
     private void checkFood() {
 
