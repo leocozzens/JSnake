@@ -22,8 +22,6 @@ public class GameController {
 
     private int snakeLen;
     private int foodEaten;
-    private int foodX;
-    private int foodY;
     private int[] x;
     private int[] y;
 
@@ -32,16 +30,16 @@ public class GameController {
         int canvasSize = (int) (screenDimensions[0]/3);
         this.drawCanvas = new Canvas(canvasSize);
         this.finalDirection = Direction.RIGHT;
-        this.gameWindow = new GameWindow(title, this.finalDirection, this.drawCanvas);
-        this.gameActive = true;
         this.gameRNG = new Random();
-        this.gameTimer = new Timer(DELAY, this.gameWindow);
 
         this.snakeLen = 6;
         this.foodEaten = 0;
         this.x = new int[this.drawCanvas.getUnitsX()];
         this.y = new int[this.drawCanvas.getUnitsY()];
-        this.newFood();
+        this.drawCanvas.updateFood(this.gameRNG.nextInt(this.x.length), this.gameRNG.nextInt(this.y.length));
+        this.gameWindow = new GameWindow(title, this.finalDirection, this.drawCanvas);
+        this.gameTimer = new Timer(DELAY, this.gameWindow);
+        this.gameActive = true;
         this.gameTimer.start();
     }
 
@@ -53,10 +51,6 @@ public class GameController {
 
     private void move() {
         
-    }
-
-    private void newFood() {
-
     }
 
     private void checkFood() {

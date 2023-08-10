@@ -14,6 +14,7 @@ public class Canvas extends JPanel {
     private int canvasWidth;
     private int canvasHeight;
     private int elementSize;
+    private int[] foodCoord;
 
     public Canvas(int canvasSize) {
         this.canvasWidth = canvasSize;
@@ -22,17 +23,7 @@ public class Canvas extends JPanel {
         this.setPreferredSize(new Dimension(canvasSize, canvasSize));
         this.setBackground(BG_COLOR);
         this.setFocusable(true);
-    }
-
-    public int getUnitsX() {
-        return canvasWidth / elementSize;
-    }
-    public int getUnitsY() {
-        return  canvasHeight / elementSize;
-    }
-
-    public void initCanvas() {
-
+        this.foodCoord = new int[2];
     }
 
     public void paintComponent(Graphics g) {
@@ -48,10 +39,25 @@ public class Canvas extends JPanel {
         for(int i = 0; i < yCount; i++) {
             g.drawLine(0, i*elementSize, this.canvasWidth, i*elementSize);
         }
-
+        g.setColor(Color.RED);
+        g.fillOval(this.foodCoord[0], this.foodCoord[1], elementSize, elementSize);
     }
 
     public void endCanvas(Graphics g) {
 
+    }
+
+    
+
+    public void updateFood(int newX, int newY) {
+        this.foodCoord[0] = newX * this.elementSize;
+        this.foodCoord[1] = newX * this.elementSize;
+    }
+
+    public int getUnitsX() {
+        return canvasWidth / elementSize;
+    }
+    public int getUnitsY() {
+        return canvasHeight / elementSize;
     }
 }
