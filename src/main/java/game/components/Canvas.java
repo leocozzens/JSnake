@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 public class Canvas extends JPanel {
     private static final int ELEMENTS_PER = 20;
     private static final Color BG_COLOR = Color.BLACK;
+    private static final Color FOOD_COLOR = new Color(200, 50, 50);
 
     private int canvasWidth;
     private int canvasHeight;
@@ -39,7 +40,7 @@ public class Canvas extends JPanel {
         for(int i = 0; i < yCount; i++) {
             g.drawLine(0, i*elementSize, this.canvasWidth, i*elementSize);
         }
-        g.setColor(Color.RED);
+        g.setColor(FOOD_COLOR);
         g.fillOval(this.foodCoord[0], this.foodCoord[1], elementSize, elementSize);
     }
 
@@ -51,7 +52,7 @@ public class Canvas extends JPanel {
 
     public void updateFood(int newX, int newY) {
         this.foodCoord[0] = newX * this.elementSize;
-        this.foodCoord[1] = newX * this.elementSize;
+        this.foodCoord[1] = newY * this.elementSize;
     }
 
     public int getUnitsX() {

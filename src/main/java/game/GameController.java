@@ -30,7 +30,7 @@ public class GameController {
         int canvasSize = (int) (screenDimensions[0]/3);
         this.drawCanvas = new Canvas(canvasSize);
         this.finalDirection = Direction.RIGHT;
-        this.gameRNG = new Random();
+        this.gameRNG = new Random(System.currentTimeMillis());
 
         this.snakeLen = 6;
         this.foodEaten = 0;
@@ -49,7 +49,7 @@ public class GameController {
     }
     
 
-    private void move() {
+    private void step() {
         
     }
 
