@@ -60,7 +60,7 @@ public class GameController {
             startY = startY % (this.drawCanvas.getUnitsY() - START_LEN + 1) + START_LEN - 1;
             break;
             case LEFT:
-            startX %= (this.drawCanvas.getUnitsX() - 1) - START_LEN;
+            startX %= (this.drawCanvas.getUnitsX() + 1) - START_LEN;
             break;
             case RIGHT:
             startX = startX % (this.drawCanvas.getUnitsX() - START_LEN + 1) + START_LEN - 1;

@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import game.GameController.Direction;
 
 public class Canvas extends JPanel {
-    private static final int ELEMENTS_PER = 8;
+    private static final int ELEMENTS_PER = 20;
     private static final Color BG_COLOR = Color.BLACK;
     private static final Color FOOD_COLOR = new Color(200, 50, 50);
 
