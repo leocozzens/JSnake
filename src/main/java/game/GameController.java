@@ -60,10 +60,10 @@ public class GameController {
             startY = startY % (this.drawCanvas.getUnitsY() - START_LEN + 1) + START_LEN - 1;
             break;
             case LEFT:
-            startX %= (this.drawCanvas.getUnitsX() + 1) - START_LEN;
+            startX = startX % (this.drawCanvas.getUnitsX() - START_LEN + 1) + START_LEN - 1;
             break;
             case RIGHT:
-            startX = startX % (this.drawCanvas.getUnitsX() - START_LEN + 1) + START_LEN - 1;
+            startX %= (this.drawCanvas.getUnitsX() + 1) - START_LEN;
             break;
         }
         for(int i = 0; i < START_LEN; i++) {
@@ -78,11 +78,11 @@ public class GameController {
                 newPart[1] = startY - i;
                 break;
                 case LEFT:
-                newPart[0] = startX + i;
+                newPart[0] = startX - i;
                 newPart[1] = startY;
                 break;
                 case RIGHT:
-                newPart[0] = startX - i;
+                newPart[0] = startX + i;
                 newPart[1] = startY;
                 break;
             }
@@ -111,10 +111,9 @@ public class GameController {
 
     public void playRound() {
         this.finalDirection = this.gameWindow.getDirection();
-        this.finalDirection = randomDirection();
-        this.drawCanvas.stepSnake(finalDirection);
+        this.drawCanvas.stepSnake(this.finalDirection);
         try {
-            Thread.sleep(100);
+            Thread.sleep(DELAY);
         }
         catch(Exception e) {
             System.err.println(e);
