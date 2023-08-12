@@ -111,7 +111,14 @@ public class GameController {
 
     public void playRound() {
         this.finalDirection = this.gameWindow.getDirection();
+        this.finalDirection = randomDirection();
         this.drawCanvas.stepSnake(finalDirection);
+        try {
+            Thread.sleep(100);
+        }
+        catch(Exception e) {
+            System.err.println(e);
+        }
     }
 
     // Getters

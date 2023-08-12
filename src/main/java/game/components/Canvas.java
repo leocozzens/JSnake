@@ -1,9 +1,9 @@
 package game.components;
 
 // JDK packages
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Queue;
 // GUI packages
 import java.awt.Color;
 import java.awt.Dimension;
@@ -22,7 +22,7 @@ public class Canvas extends JPanel {
     private int canvasHeight;
     private int elementSize;
     private int[] foodCoord;
-    private Queue<int[]> snakeBody;
+    private Deque<int[]> snakeBody;
 
     public Canvas(int canvasSize) {
         this.canvasWidth = canvasSize;
@@ -32,9 +32,10 @@ public class Canvas extends JPanel {
         this.setBackground(BG_COLOR);
         this.setFocusable(true);
         this.foodCoord = new int[2];
-        this.snakeBody = new LinkedList<int[]>();
+        this.snakeBody = new ArrayDeque<int[]>();
     }
 
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         draw(g);
@@ -63,16 +64,25 @@ public class Canvas extends JPanel {
     }
 
     public void stepSnake(Direction newDirection) {
+        int[] nextPiece = this.snakeBody.poll();
+        nextPiece[0] = this.snakeBody.peekLast()[0];
+        nextPiece[1] = this.snakeBody.peekLast()[1];
         switch(newDirection) {
             case UP:
+                nextPiece[1]++;
             break;
             case DOWN:
-            break;
+                nextPiece[1]--;
+            break;  
             case LEFT:
+                nextPiece[0]--;
             break;
             case RIGHT:
+                nextPiece[0]++;
             break;
         }
+        this.snakeBody.add(nextPiece);
+        this.repaint();
     }
 
     public void addPiece(int[] newPiece) {
