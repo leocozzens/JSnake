@@ -30,7 +30,6 @@ public class Canvas extends JPanel {
         this.elementSize = canvasHeight / ELEMENTS_PER;
         this.setPreferredSize(new Dimension(canvasSize, canvasSize));
         this.setBackground(BG_COLOR);
-        this.setFocusable(true);
         this.foodCoord = new int[2];
         this.snakeBody = new ArrayDeque<int[]>();
     }
@@ -69,17 +68,17 @@ public class Canvas extends JPanel {
         nextPiece[1] = this.snakeBody.peekLast()[1];
         switch(newDirection) {
             case UP:
-                nextPiece[1]++;
-            break;
-            case DOWN:
                 nextPiece[1]--;
-            break;  
+                break;
+            case DOWN:
+                nextPiece[1]++;
+                break;  
             case LEFT:
                 nextPiece[0]--;
             break;
             case RIGHT:
                 nextPiece[0]++;
-            break;
+                break;
         }
         this.snakeBody.add(nextPiece);
         this.repaint();

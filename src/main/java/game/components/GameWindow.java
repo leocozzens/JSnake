@@ -21,7 +21,8 @@ public class GameWindow extends JFrame implements ActionListener {
         this.pack();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
-        this.addKeyListener(new MyKeyAdapter());
+        this.addKeyListener(new MyKeyAdapter(this));
+        this.setFocusable(true);
 
         this.currDirection = initDirection;
     }
@@ -30,15 +31,41 @@ public class GameWindow extends JFrame implements ActionListener {
         return currDirection;
     }
 
+    public void setDirection(Direction newDirection) {
+        this.currDirection = newDirection;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         
     }
 
     public class MyKeyAdapter extends KeyAdapter {
+        private GameWindow parent;
+        public MyKeyAdapter(GameWindow parent) {
+            this.parent = parent;
+        }
+
         @Override
         public void keyPressed(KeyEvent e) {
-
+            switch(e.getKeyCode()) {
+                case KeyEvent.VK_UP:
+                case KeyEvent.VK_W:
+                    parent.setDirection(Direction.UP);
+                    break;
+                case KeyEvent.VK_DOWN:
+                case KeyEvent.VK_S:
+                    parent.setDirection(Direction.DOWN);
+                    break;
+                case KeyEvent.VK_LEFT:
+                case KeyEvent.VK_A:
+                    parent.setDirection(Direction.LEFT);
+                    break;
+                case KeyEvent.VK_RIGHT:
+                case KeyEvent.VK_D:
+                    parent.setDirection(Direction.RIGHT);
+                    break;
+            }
         }
     }
 }
