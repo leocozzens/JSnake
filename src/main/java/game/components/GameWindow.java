@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 // Local packages
 import game.GameController.Direction;
 
-public class GameWindow extends JFrame implements ActionListener {
+public class GameWindow extends JFrame {
     private Direction currDirection;
 
     public GameWindow(String title, Direction initDirection, Canvas drawCanvas) {
@@ -33,11 +33,6 @@ public class GameWindow extends JFrame implements ActionListener {
 
     public void setDirection(Direction newDirection) {
         this.currDirection = newDirection;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        
     }
 
     public class MyKeyAdapter extends KeyAdapter {

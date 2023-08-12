@@ -6,7 +6,6 @@ import java.util.Random;
 // Local packages
 import game.components.Canvas;
 import game.components.GameWindow;
-import javax.swing.Timer;
 
 public class GameController {
     public static enum Direction { 
@@ -30,7 +29,6 @@ public class GameController {
     private Canvas drawCanvas;
     private boolean gameActive;
     private Direction finalDirection;
-    private Timer gameTimer;
     private Random gameRNG;
     private int score;
 
@@ -43,9 +41,7 @@ public class GameController {
         this.initSnake(randomDirection());
         this.drawCanvas.updateFood(this.gameRNG.nextInt(this.drawCanvas.getUnitsX()), this.gameRNG.nextInt(this.drawCanvas.getUnitsY()));
         this.gameWindow = new GameWindow(title, this.finalDirection, this.drawCanvas);
-        this.gameTimer = new Timer(DELAY, this.gameWindow);
         this.gameActive = true;
-        this.gameTimer.start();
     }
 
     // Instance methods
@@ -54,10 +50,10 @@ public class GameController {
         int startY = this.gameRNG.nextInt(this.drawCanvas.getUnitsY());
         switch(startDirection) {
             case UP:
-            startY %= (this.drawCanvas.getUnitsY() + 1) - START_LEN;
+            startY = startY % (this.drawCanvas.getUnitsY() - START_LEN + 1) + START_LEN - 1;
             break;
             case DOWN:
-            startY = startY % (this.drawCanvas.getUnitsY() - START_LEN + 1) + START_LEN - 1;
+            startY %= (this.drawCanvas.getUnitsY() + 1) - START_LEN;
             break;
             case LEFT:
             startX = startX % (this.drawCanvas.getUnitsX() - START_LEN + 1) + START_LEN - 1;
@@ -71,11 +67,11 @@ public class GameController {
             switch(startDirection) {
                 case UP:
                 newPart[0] = startX;
-                newPart[1] = startY + i;
+                newPart[1] = startY - i;
                 break;
                 case DOWN:
                 newPart[0] = startX;
-                newPart[1] = startY - i;
+                newPart[1] = startY + i;
                 break;
                 case LEFT:
                 newPart[0] = startX - i;

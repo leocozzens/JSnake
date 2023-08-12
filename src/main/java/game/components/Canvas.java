@@ -81,7 +81,7 @@ public class Canvas extends JPanel {
                 break;
         }
         this.snakeBody.add(nextPiece);
-        this.repaint();
+        this.repaint(); // TODO: Only repaint head and tail
     }
 
     public void addPiece(int[] newPiece) {
