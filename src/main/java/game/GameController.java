@@ -22,7 +22,7 @@ public class GameController {
             this.index = index;
         }
     };
-    private static final int DELAY = 75;
+    private static final long DELAY_MS = 150;
     private static final int START_LEN = 6;
 
     private GameWindow gameWindow;
@@ -30,6 +30,7 @@ public class GameController {
     private boolean gameActive;
     private Direction finalDirection;
     private Random gameRNG;
+    private long timeStore;
     private int score;
 
     // Constructor/Destructor
@@ -106,13 +107,20 @@ public class GameController {
     }
 
     public void playRound() {
+        this.timeStore = System.currentTimeMillis();
         this.finalDirection = this.gameWindow.getDirection();
         this.drawCanvas.stepSnake(this.finalDirection);
-        try {
-            Thread.sleep(DELAY);
-        }
-        catch(Exception e) {
-            System.err.println(e);
+    }
+
+    public void fullWait() {
+        long elapsedTime = System.currentTimeMillis() - timeStore;
+        if(elapsedTime < DELAY_MS) {
+            try {
+                Thread.sleep(DELAY_MS - elapsedTime);
+            }
+            catch(Exception e) {
+                System.err.println(e);
+            }
         }
     }
 

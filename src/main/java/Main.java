@@ -6,7 +6,9 @@ public class Main {
     private static final String GAME_TITLE = "JSnake";
     public static void main(String args[]) {
         GameController controller = new GameController(GAME_TITLE, ScreenManager.getScreenDim());
-        while(controller.isRunning()) controller.playRound();
-        // TODO: Cleanup
+        while(controller.isRunning()) {
+            controller.playRound(); 
+            controller.fullWait();
+        }
     }
 }
