@@ -40,7 +40,8 @@ public class GameController {
         this.gameRNG = new Random(System.currentTimeMillis());
 
         this.initSnake(randomDirection());
-        this.drawCanvas.updateFood(this.gameRNG.nextInt(this.drawCanvas.getUnitsX()), this.gameRNG.nextInt(this.drawCanvas.getUnitsY()));
+        this.makeFood();
+
         this.gameWindow = new GameWindow(title, this.finalDirection, this.drawCanvas);
         this.gameActive = true;
     }
@@ -98,8 +99,14 @@ public class GameController {
         throw new IllegalArgumentException("Incorrect random direction input");
     }
 
-    private void checkFood() {
-
+    private void makeFood() {
+        int foodX;
+        int foodY;
+        do {
+            foodX = this.gameRNG.nextInt(this.drawCanvas.getUnitsX());
+            foodY = this.gameRNG.nextInt(this.drawCanvas.getUnitsY());
+        } while(this.drawCanvas.isTaken(foodX, foodY));
+        this.drawCanvas.updateFood(foodX, foodY);
     }
 
     private void checkCollisons() {
@@ -110,6 +117,10 @@ public class GameController {
         this.timeStore = System.currentTimeMillis();
         setDirection(this.gameWindow.getDirection());
         this.drawCanvas.stepSnake(this.finalDirection);
+        if(this.drawCanvas.checkFood()) {
+            this.makeFood();
+            this.drawCanvas.foodMade();
+        }
     }
 
     public void fullWait() {

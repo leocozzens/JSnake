@@ -22,6 +22,7 @@ public class Canvas extends JPanel {
     private int canvasHeight;
     private int elementSize;
     private int[] foodCoord;
+    private boolean foodEaten;
     private Deque<int[]> snakeBody;
     private Direction headDirection;
 
@@ -32,6 +33,7 @@ public class Canvas extends JPanel {
         this.setPreferredSize(new Dimension(canvasSize, canvasSize));
         this.setBackground(BG_COLOR);
         this.foodCoord = new int[2];
+        this.foodEaten = false;
         this.snakeBody = new ArrayDeque<int[]>();
     }
 
@@ -113,6 +115,7 @@ public class Canvas extends JPanel {
         int[] nextPiece;
         if((newX == this.foodCoord[0]) && (newY == this.foodCoord[1])) {
             nextPiece = new int[2];
+            this.foodEaten = true;
         }
         else {
             nextPiece = this.snakeBody.poll();
@@ -131,6 +134,25 @@ public class Canvas extends JPanel {
     public void updateFood(int newX, int newY) {
         this.foodCoord[0] = newX;
         this.foodCoord[1] = newY;
+    }
+
+    public boolean isTaken(int x, int y) {
+        Iterator<int[]> snakeIter = this.snakeBody.iterator();
+        while(snakeIter.hasNext()) {
+        int[] currentPiece = snakeIter.next();
+            if(x == currentPiece[0] && y == currentPiece[1]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean checkFood() {
+        return this.foodEaten;
+    }
+
+    public void foodMade() {
+        this.foodEaten = false;
     }
 
     public int getUnitsX() {
