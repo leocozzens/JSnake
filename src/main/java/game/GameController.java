@@ -9,9 +9,9 @@ import game.components.GameWindow;
 
 public class GameController {
     public static enum Direction { 
-        UP(-2, 0),
-        DOWN(-1, 1),
-        LEFT(1, 2),
+        UP(-1, 0),
+        DOWN(1, 1),
+        LEFT(-2, 2),
         RIGHT(2, 3);
 
         final int val;
@@ -22,7 +22,7 @@ public class GameController {
             this.index = index;
         }
     };
-    private static final long DELAY_MS = 150;
+    private static final long DELAY_MS = 75;
     private static final int START_LEN = 6;
 
     private GameWindow gameWindow;
@@ -108,7 +108,7 @@ public class GameController {
 
     public void playRound() {
         this.timeStore = System.currentTimeMillis();
-        this.finalDirection = this.gameWindow.getDirection();
+        setDirection(this.gameWindow.getDirection());
         this.drawCanvas.stepSnake(this.finalDirection);
     }
 
@@ -124,8 +124,12 @@ public class GameController {
         }
     }
 
-    // Getters
+    // Getters & setters
     public boolean isRunning() {
         return gameActive;
+    }
+
+    private void setDirection(Direction newDirection) {
+        if(newDirection.val + this.finalDirection.val != 0) this.finalDirection = newDirection;
     }
 }
