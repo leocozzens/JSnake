@@ -23,6 +23,7 @@ public class Canvas extends JPanel {
     private int elementSize;
     private int[] foodCoord;
     private Deque<int[]> snakeBody;
+    private Direction headDirection;
 
     public Canvas(int canvasSize) {
         this.canvasWidth = canvasSize;
@@ -52,9 +53,39 @@ public class Canvas extends JPanel {
         g.fillOval(this.foodCoord[0] * this.elementSize, this.foodCoord[1] * this.elementSize, elementSize, elementSize);
         g.setColor(Color.GREEN);
         Iterator<int[]> snakeIter = this.snakeBody.iterator();
-        while(snakeIter.hasNext()) {
+        while(true) {
             int[] currentPiece = snakeIter.next();
-            g.fillRect(currentPiece[0]*this.elementSize, currentPiece[1]*this.elementSize, this.elementSize, this.elementSize);
+            if(!snakeIter.hasNext()) {
+                int x = currentPiece[0] * this.elementSize;
+                int y = currentPiece[1] * this.elementSize;
+                int startAngle = 0;
+                int arcAngle = 0;
+                switch(this.headDirection) {
+                    case UP:
+                        y = (currentPiece[1] * this.elementSize) + this.elementSize / 2;
+                        startAngle = 0;
+                        arcAngle = 180;
+                        break;
+                    case DOWN:
+                        y = (currentPiece[1] * this.elementSize) - this.elementSize / 2;
+                        startAngle = 180;
+                        arcAngle = 180;
+                        break;
+                    case LEFT:
+                        x = currentPiece[0] * this.elementSize + this.elementSize / 2;
+                        startAngle = 90;
+                        arcAngle = 180;
+                        break;
+                    case RIGHT:
+                        x = currentPiece[0] * this.elementSize - this.elementSize / 2;
+                        startAngle = 270;
+                        arcAngle = 180;
+                        break;
+                }
+                g.fillArc(x, y, this.elementSize, this.elementSize, startAngle, arcAngle);
+                break;
+            }
+            g.fillRect(currentPiece[0] * this.elementSize, currentPiece[1] * this.elementSize, this.elementSize, this.elementSize);
         }
     }
 
@@ -89,6 +120,7 @@ public class Canvas extends JPanel {
         nextPiece[0] = newX;
         nextPiece[1] = newY;
         this.snakeBody.add(nextPiece);
+        this.headDirection = newDirection;
         this.repaint(); // TODO: Only repaint head and tail
     }
 
