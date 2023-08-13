@@ -49,7 +49,7 @@ public class Canvas extends JPanel {
             g.drawLine(0, i*elementSize, this.canvasWidth, i*elementSize);
         }
         g.setColor(FOOD_COLOR);
-        g.fillOval(this.foodCoord[0], this.foodCoord[1], elementSize, elementSize);
+        g.fillOval(this.foodCoord[0] * this.elementSize, this.foodCoord[1] * this.elementSize, elementSize, elementSize);
         g.setColor(Color.GREEN);
         Iterator<int[]> snakeIter = this.snakeBody.iterator();
         while(snakeIter.hasNext()) {
@@ -63,23 +63,31 @@ public class Canvas extends JPanel {
     }
 
     public void stepSnake(Direction newDirection) {
-        int[] nextPiece = this.snakeBody.poll();
-        nextPiece[0] = this.snakeBody.peekLast()[0];
-        nextPiece[1] = this.snakeBody.peekLast()[1];
+        int newX = this.snakeBody.peekLast()[0];
+        int newY = this.snakeBody.peekLast()[1];
         switch(newDirection) {
             case UP:
-                nextPiece[1]--;
+                newY--;
                 break;
             case DOWN:
-                nextPiece[1]++;
+                newY++;
                 break;  
             case LEFT:
-                nextPiece[0]--;
+                newX--;
             break;
             case RIGHT:
-                nextPiece[0]++;
+                newX++;
                 break;
         }
+        int[] nextPiece;
+        if((newX == this.foodCoord[0]) && (newY == this.foodCoord[1])) {
+            nextPiece = new int[2];
+        }
+        else {
+            nextPiece = this.snakeBody.poll();
+        }
+        nextPiece[0] = newX;
+        nextPiece[1] = newY;
         this.snakeBody.add(nextPiece);
         this.repaint(); // TODO: Only repaint head and tail
     }
@@ -89,8 +97,8 @@ public class Canvas extends JPanel {
     }
 
     public void updateFood(int newX, int newY) {
-        this.foodCoord[0] = newX * this.elementSize;
-        this.foodCoord[1] = newY * this.elementSize;
+        this.foodCoord[0] = newX;
+        this.foodCoord[1] = newY;
     }
 
     public int getUnitsX() {
