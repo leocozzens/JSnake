@@ -15,12 +15,14 @@ import game.GameController.Direction;
 
 public class Canvas extends JPanel {
     private static final int ELEMENTS_PER = 20;
+    private static final int LENGTH_GAINED = 4;
     private static final Color BG_COLOR = Color.BLACK;
     private static final Color FOOD_COLOR = new Color(200, 50, 50);
 
     private int canvasWidth;
     private int canvasHeight;
     private int elementSize;
+    private int leftToAdd;
     private int[] foodCoord;
     private boolean foodEaten;
     private Deque<int[]> snakeBody;
@@ -33,6 +35,7 @@ public class Canvas extends JPanel {
         this.setPreferredSize(new Dimension(canvasSize, canvasSize));
         this.setBackground(BG_COLOR);
         this.foodCoord = new int[2];
+        this.leftToAdd = 0;
         this.foodEaten = false;
         this.snakeBody = new ArrayDeque<int[]>();
     }
@@ -114,8 +117,13 @@ public class Canvas extends JPanel {
         }
         int[] nextPiece;
         if((newX == this.foodCoord[0]) && (newY == this.foodCoord[1])) {
-            nextPiece = new int[2];
+            leftToAdd += LENGTH_GAINED;
             this.foodEaten = true;
+        }
+
+        if(leftToAdd > 0) {
+            nextPiece = new int[2];
+            leftToAdd--;
         }
         else {
             nextPiece = this.snakeBody.poll();
