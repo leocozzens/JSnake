@@ -25,6 +25,7 @@ public class Canvas extends JPanel {
     private int leftToAdd;
     private int[] foodCoord;
     private boolean foodEaten;
+    private boolean collided;
     private Deque<int[]> snakeBody;
     private Direction headDirection;
 
@@ -37,6 +38,7 @@ public class Canvas extends JPanel {
         this.foodCoord = new int[2];
         this.leftToAdd = 0;
         this.foodEaten = false;
+        this.collided = false;
         this.snakeBody = new ArrayDeque<int[]>();
     }
 
@@ -116,6 +118,9 @@ public class Canvas extends JPanel {
                 break;
         }
         int[] nextPiece;
+        if(this.isTaken(newX, newY) || outOfBounds(newX, newY)) {
+            this.collided = true;
+        }
         if((newX == this.foodCoord[0]) && (newY == this.foodCoord[1])) {
             leftToAdd += LENGTH_GAINED;
             this.foodEaten = true;
@@ -155,8 +160,21 @@ public class Canvas extends JPanel {
         return false;
     }
 
+    private boolean outOfBounds(int x, int y) {
+        x *= this.elementSize;
+        y *= this.elementSize;
+        if(x >= this.canvasWidth || x < 0 || y >= this.canvasHeight || y < 0) {
+            return true;
+        }
+        return false;
+    }
+
     public boolean checkFood() {
         return this.foodEaten;
+    }
+    
+    public boolean checkCollisons() {
+        return this.collided;
     }
 
     public void foodMade() {

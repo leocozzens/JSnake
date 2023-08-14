@@ -10,5 +10,6 @@ public class Main {
             controller.playRound(); 
             controller.fullWait();
         }
+        controller.gameOver();
     }
 }

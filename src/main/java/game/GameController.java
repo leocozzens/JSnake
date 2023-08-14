@@ -109,18 +109,21 @@ public class GameController {
         this.drawCanvas.updateFood(foodX, foodY);
     }
 
-    private void checkCollisons() {
-
-    }
-
     public void playRound() {
         this.timeStore = System.currentTimeMillis();
         setDirection(this.gameWindow.getDirection());
         this.drawCanvas.stepSnake(this.finalDirection);
+        if(this.drawCanvas.checkCollisons()) {
+            this.gameActive = false;
+        }
         if(this.drawCanvas.checkFood()) {
             this.makeFood();
             this.drawCanvas.foodMade();
         }
+    }
+
+    public void gameOver() {
+        System.exit(0);
     }
 
     public void fullWait() {
