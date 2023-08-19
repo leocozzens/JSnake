@@ -52,16 +52,18 @@ public class GameController {
         int startY = this.gameRNG.nextInt(this.drawCanvas.getUnitsY());
         switch(startDirection) {
             case UP:
-            startY = startY % (this.drawCanvas.getUnitsY() - START_LEN + 1) + START_LEN - 1;
+            startY %= this.drawCanvas.getUnitsY() - START_LEN;
+            startY += START_LEN;
             break;
             case DOWN:
-            startY %= (this.drawCanvas.getUnitsY() + 1) - START_LEN;
+            startY %= this.drawCanvas.getUnitsY() - START_LEN;
             break;
             case LEFT:
-            startX = startX % (this.drawCanvas.getUnitsX() - START_LEN + 1) + START_LEN - 1;
+            startX %= this.drawCanvas.getUnitsX() - START_LEN;
+            startX += START_LEN;
             break;
             case RIGHT:
-            startX %= (this.drawCanvas.getUnitsX() + 1) - START_LEN;
+            startX %= this.drawCanvas.getUnitsX() - START_LEN;
             break;
         }
         for(int i = 0; i < START_LEN; i++) {
